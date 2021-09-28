@@ -1,0 +1,14 @@
+[
+    {
+        "name":  "afasOrgUnits",
+        "value":  "{{form.teamRules.AFASOEid}}"
+    },
+    {
+        "name":  "functionIds",
+        "value":  "{{form.teamRules.FunctionId}}"
+    },
+    {
+        "name":  "nedapTeamIds",
+        "value":  "{{form.teamRules.NedapTeamIds}}"
+    }
+]
