@@ -3,7 +3,13 @@
 With this HelloID Service Automation Delegated Form you can delete mapping rules from a CSV for Nedap. The CSV contains rules in which AFAS Organisational Units are mapped, optionally combined with an AFAS jobtitle, to Nedap Teams. The following options are available:
  1. Select a rule to delete
  2. Confirm the changes
- 
+
+## Versioning
+| Version | Description | Date |
+| - | - | - |
+| 1.0.1   | Added version number and updated all-in-one script | 2021/11/04  |
+| 1.0.0   | Initial release | 2021/09/28  |
+
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 * [Description](#description)
@@ -58,5 +64,8 @@ This Powershell data source retrieves the rules from the configured mapping file
 ### Delegated form task '[task]_Nedap-ons-delete-team-rule'
 This delegated form task will delete the selected rule from the configured mapping file.
 
-# HelloID Docs
+## Getting help
+_If you need help, feel free to ask questions_
+
+## HelloID Docs
 The official HelloID documentation can be found at: https://docs.helloid.com/
