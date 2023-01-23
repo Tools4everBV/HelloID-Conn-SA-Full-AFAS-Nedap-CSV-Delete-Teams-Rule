@@ -415,16 +415,16 @@ function Get-AFASConnectorData {
 }
 
 
-$organizationalUnits = New-Object System.Collections.ArrayList
+$organizationalUnits = [System.Collections.ArrayList]::new()
 Get-AFASConnectorData -Token $token -BaseUri $baseUri -Connector "T4E_HelloID_OrganizationalUnits" ([ref]$organizationalUnits) 
 $afasLocations = $organizationalUnits | Select-Object ExternalId, DisplayName 
 
-$employments = New-Object System.Collections.ArrayList
+$employments = [System.Collections.ArrayList]::new()
 Get-AFASConnectorData -Token $token -BaseUri $baseUri -Connector "T4E_HelloID_Employments" ([ref]$employments)
 $employments = $employments | Select-Object Functie_code, Functie_omschrijving #| Group-Object Persoonsnummer -AsHashTable
 
 if ($true -eq $includePositions) {
-    $positions = New-Object System.Collections.ArrayList
+    $positions = [System.Collections.ArrayList]::new()
     Get-AFASConnectorData -Token $token -BaseUri $baseUri -Connector "T4E_HelloID_Positions" ([ref]$positions)
     $positions = $positions | Select-Object Functie_code, Functie_omschrijving #| Group-Object Persoonsnummer -AsHashTable
 }
@@ -449,7 +449,7 @@ function Get-ResponseStream {
         $Exception
     )
     $result = $Exception.Exception.Response.GetResponseStream()
-    $reader = New-Object System.IO.StreamReader($result)
+    $reader = [System.IO.StreamReader]::new($result)
     $responseReader = $reader.ReadToEnd()
     $reader.Dispose()
     Write-Output  $responseReader
@@ -465,7 +465,7 @@ function Import-NedapCertificate {
         $CertificatePassword
     )
 
-    $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+    $cert = [System.Security.Cryptography.X509Certificates.X509Certificate2]::new()
     $cert.Import($CertificatePath, $CertificatePassword, 'UserKeySet')
     if ($cert.NotAfter -le (Get-Date)) {
         throw "Certificate has expired on $($cert.NotAfter)..."
@@ -496,7 +496,7 @@ function Get-NedapTeamList {
             $errorReponse = $_.ErrorDetails
         }
         elseif ($_.Exception.Response) {
-            $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+            $reader = [System.IO.StreamReader]::new($_.Exception.Response.GetResponseStream())
             $errorReponse = $reader.ReadToEnd()
             $reader.Dispose()
         }
@@ -518,7 +518,7 @@ foreach ($rowA in $rules) {
         NedapTeamIds = $rowA.NedapTeamId
         NedapTeams   = $null
     }
-    $joinedAfasDataset += New-Object -Type PSObject -Property $joinedRow
+    $joinedAfasDataset += [PSObject]::new($joinedRow) 
 }
 $joinedAfasDataset = $joinedAfasDataset | Where-Object Department -ne $null
 
@@ -534,7 +534,7 @@ foreach ($rowA in $joinedAfasDataset) {
         $joinedRow = @{
             NedapTeams = $rowB.Name
         }
-        $joinedNedapDataset += New-Object -Type PSObject -Property $joinedRow        
+        $joinedNedapDataset += [PSObject]::new($joinedRow)         
     }
     $mystring = $joinedNedapDataset | ForEach-Object { $_.NedapTeams }
     $rowA.NedapTeams = $mystring -join ", "
